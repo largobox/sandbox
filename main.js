@@ -1,11 +1,30 @@
 const { Server } = require('socket.io')
 
 
-const io = new Server()
 const port = 3000
+const options = {
+  cors: {
+    origin: '*',
+  }
+}
+const io = new Server(options)
 
 io.on('connection', (socket) => {
-  console.log('Connection')
+  console.log('Server. Event "connection"')
+
+  socket.on('disconnect', (reason) => {
+    console.log('Server. Socket. Event "disconnect"', reason)
+  });
+
+  socket.on('disconnecting', (reason) => {
+    console.log('Server. Socket. Event "disconnecting"', reason)
+  });
+
+  socket.on('message-from-client', (data) => {
+    console.log('Server. Socket. Event "message-from-client"', data)
+
+    socket.emit('message-from-server', 'some-string-from-server')
+  });
 })
 
 io.listen(port)
