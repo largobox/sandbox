@@ -29,4 +29,4 @@ io.on('connection', (socket) => {
 
 io.listen(port)
 
-console.log(`Server. Started on port: ${port}`)
+console.log(`SocketIO Server. Started on port: ${port}`)
